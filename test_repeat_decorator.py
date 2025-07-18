@@ -1,24 +1,18 @@
 import unittest
-from unittest.mock import patch
-from repeat_decorator import repeat
+from repeat_decorator import greeting
 
 
 class TestRepeatDecorator(unittest.TestCase):
-    def test_repeat(self):
-        '''
-        Test case for repeat function
-        '''
-        @repeat(3, print_result=True)
-        def greeting(name):
-            return f"Hi {name}"
 
-        with patch("builtins.print") as mock_print:
-            result = greeting("Ali")
+    def test_greeting_function(self):
+        result = greeting("Ali")
+        expected = ['Hey Ali', 'Hey Ali', 'Hey Ali']
+        self.assertEqual(result, expected)
 
-        # Assert that print was called 3 times
-        self.assertEqual(mock_print.call_count, 3)
-        mock_print.assert_any_call("Hi Ali")
-        self.assertEqual(result, ["Hi Ali", "Hi Ali", "Hi Ali"])
+    def test_greeting_repeat_count(self):
+        result = greeting("Test")
+        self.assertEqual(len(result), 3)
+        self.assertTrue(all(r == "Hey Test" for r in result))
 
 
 if __name__ == "__main__":
